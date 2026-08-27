@@ -43,59 +43,123 @@ tags_raw:
   - public-sector
   - research
 apis:
-  - name: Swiss Food Composition Database API
-    description: >-
-      Public, unauthenticated JSON REST API over the Swiss Food Composition Database, served from the FoodCASE
-      platform operated for the FSVO. 21 read-only GET operations: food search with category, subcategory and
-      nutrient-threshold filters, single food retrieval, nutrient values and their source/provenance records,
-      recipe ingredients, LanguaL descriptors, the full category tree, component / component-set / group / unit
-      reference data, generic-food counts and the current database version. Every operation accepts a lang
-      parameter (de, en, fr, it). No API key, no quota and no rate limiting is documented or observed.
-    humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
-    baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
-    tags:
-      - Food
-      - Nutrition
-      - Food Composition
-      - Open Data
-      - Government
-      - Switzerland
-      - Reference Data
-    tags_raw:
-      - food
-      - nutrition
-      - food-composition
-      - open-data
-      - government
-      - switzerland
-      - reference-data
-    properties:
-      - type: OpenAPI
-        url: openapi/swiss-food-composition-database-openapi.json
-      - type: OpenAPI
-        url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.json
-      - type: APIReference
-        url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
-      - type: Documentation
-        url: https://naehrwertdaten.ch/wp-content/uploads/2025/07/The-Swiss-Food-Composition-Database-API-descripton_V3-separate-API-prod.docx
-      - type: Overlay
-        url: overlays/swiss-food-composition-database-openapi-overlay.yaml
-      - type: Authentication
-        url: authentication/swiss-food-composition-database-authentication.yml
-      - type: Conventions
-        url: conventions/swiss-food-composition-database-conventions.yml
-      - type: DataModel
-        url: data-model/swiss-food-composition-database-data-model.yml
-      - type: RateLimits
-        url: rate-limits/swiss-food-composition-database-rate-limits.yml
-      - type: Plans
-        url: plans/swiss-food-composition-database-plans-pricing.yml
-      - type: Conformance
-        url: conformance/swiss-food-composition-database-conformance.yml
-      - type: Lifecycle
-        url: lifecycle/swiss-food-composition-database-lifecycle.yml
-      - type: MCPServer
-        url: mcp/swiss-food-composition-database-mcp.yml
+- aid: swiss-food-composition-database:swiss-food-composition-database-data-api
+  name: Swiss Food Composition Database Data API
+  description: The data API from Swiss Food Composition Database — 13 operation(s) for data.
+  humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  tags:
+  - data
+  properties:
+  - type: OpenAPI
+    url: openapi/swiss-food-composition-database-data-api-openapi.yml
+  - type: APIReference
+    url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  - type: Documentation
+    url: >-
+      https://naehrwertdaten.ch/wp-content/uploads/2025/07/The-Swiss-Food-Composition-Database-API-descripton_V3-separate-API-prod.docx
+  - type: Authentication
+    url: authentication/swiss-food-composition-database-authentication.yml
+  - type: Conventions
+    url: conventions/swiss-food-composition-database-conventions.yml
+  - type: DataModel
+    url: data-model/swiss-food-composition-database-data-model.yml
+  - type: RateLimits
+    url: rate-limits/swiss-food-composition-database-rate-limits.yml
+  - type: Plans
+    url: plans/swiss-food-composition-database-plans-pricing.yml
+  - type: Conformance
+    url: conformance/swiss-food-composition-database-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/swiss-food-composition-database-lifecycle.yml
+- aid: swiss-food-composition-database:swiss-food-composition-database-stats-api
+  name: Swiss Food Composition Database Stats API
+  description: The stats API from Swiss Food Composition Database — 1 operation(s) for stats.
+  humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  tags:
+  - stats
+  properties:
+  - type: OpenAPI
+    url: openapi/swiss-food-composition-database-stats-api-openapi.yml
+  - type: APIReference
+    url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  - type: Documentation
+    url: >-
+      https://naehrwertdaten.ch/wp-content/uploads/2025/07/The-Swiss-Food-Composition-Database-API-descripton_V3-separate-API-prod.docx
+  - type: Authentication
+    url: authentication/swiss-food-composition-database-authentication.yml
+  - type: Conventions
+    url: conventions/swiss-food-composition-database-conventions.yml
+  - type: DataModel
+    url: data-model/swiss-food-composition-database-data-model.yml
+  - type: RateLimits
+    url: rate-limits/swiss-food-composition-database-rate-limits.yml
+  - type: Plans
+    url: plans/swiss-food-composition-database-plans-pricing.yml
+  - type: Conformance
+    url: conformance/swiss-food-composition-database-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/swiss-food-composition-database-lifecycle.yml
+- aid: swiss-food-composition-database:swiss-food-composition-database-system-api
+  name: Swiss Food Composition Database System API
+  description: The system API from Swiss Food Composition Database — 5 operation(s) for system.
+  humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  tags:
+  - system
+  properties:
+  - type: OpenAPI
+    url: openapi/swiss-food-composition-database-system-api-openapi.yml
+  - type: APIReference
+    url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  - type: Documentation
+    url: >-
+      https://naehrwertdaten.ch/wp-content/uploads/2025/07/The-Swiss-Food-Composition-Database-API-descripton_V3-separate-API-prod.docx
+  - type: Authentication
+    url: authentication/swiss-food-composition-database-authentication.yml
+  - type: Conventions
+    url: conventions/swiss-food-composition-database-conventions.yml
+  - type: DataModel
+    url: data-model/swiss-food-composition-database-data-model.yml
+  - type: RateLimits
+    url: rate-limits/swiss-food-composition-database-rate-limits.yml
+  - type: Plans
+    url: plans/swiss-food-composition-database-plans-pricing.yml
+  - type: Conformance
+    url: conformance/swiss-food-composition-database-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/swiss-food-composition-database-lifecycle.yml
+- aid: swiss-food-composition-database:swiss-food-composition-database-system-configuration-api
+  name: Swiss Food Composition Database system configuration API
+  description: >-
+    The system configuration API from Swiss Food Composition Database — 1 operation(s) for system configuration.
+  humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  tags:
+  - system configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/swiss-food-composition-database-system-configuration-api-openapi.yml
+  - type: APIReference
+    url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  - type: Documentation
+    url: >-
+      https://naehrwertdaten.ch/wp-content/uploads/2025/07/The-Swiss-Food-Composition-Database-API-descripton_V3-separate-API-prod.docx
+  - type: Authentication
+    url: authentication/swiss-food-composition-database-authentication.yml
+  - type: Conventions
+    url: conventions/swiss-food-composition-database-conventions.yml
+  - type: DataModel
+    url: data-model/swiss-food-composition-database-data-model.yml
+  - type: RateLimits
+    url: rate-limits/swiss-food-composition-database-rate-limits.yml
+  - type: Plans
+    url: plans/swiss-food-composition-database-plans-pricing.yml
+  - type: Conformance
+    url: conformance/swiss-food-composition-database-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/swiss-food-composition-database-lifecycle.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
