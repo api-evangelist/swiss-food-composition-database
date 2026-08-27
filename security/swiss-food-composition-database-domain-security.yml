@@ -1,0 +1,25 @@
+generated: '2026-08-27'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: naehrwertdaten.ch
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 24 11:18:49 2026 GMT
+  hsts: false
+- host: api.webapp.prod.blv.foodcase-services.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 24 11:16:57 2026 GMT
+  hsts: false
+domains:
+- domain: naehrwertdaten.ch
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
+- domain: foodcase-services.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false

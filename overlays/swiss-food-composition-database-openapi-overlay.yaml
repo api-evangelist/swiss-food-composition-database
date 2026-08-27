@@ -1,0 +1,71 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Swiss Food Composition Database API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-27'
+  method: generated
+  extends: openapi/swiss-food-composition-database-openapi.json
+  source: >-
+    Values in the `info` and `servers` actions are NOT invented. The provider's own Swagger UI page at
+    https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS injects them client-side before rendering
+    (see the inline <script>: jsonSpec['servers'] = [{url: window.location.origin + '/BLV_WebApp_WS'}] and
+    jsonSpec['info'] = {title: 'Swiss food composition database API', version: '1.0.0', description:
+    'API for accessing data available in Swiss food composition database.'}). The served openapi.json therefore
+    ships with neither block; this overlay restores exactly what the provider's own page supplies.
+    The base URL is additionally confirmed by the FSVO API description document published at
+    https://naehrwertdaten.ch/en/downloads/.
+  x-observed:
+    fetched: '2026-08-27'
+    notes:
+      - operationId: getFoodsTurbo
+        observed: >-
+          GET /webresources/BLV-api/foods?search=apple&lang=en&limit=2 returns objects shaped
+          {id, foodName, generic, categoryNames, amount, foodid, valueTypeCode}, which does not match the
+          declared FoodWithNamesSynonymesCategories schema (names[], synonyms[], categories[]). Recorded as
+          observed drift only; the served contract is NOT rewritten here.
+      - operationId: getFoodDbIdByFoodId
+        observed: >-
+          GET /webresources/BLV-api/fooddbid/10 returns a bare integer (351894). The spec declares the 200 as
+          an array of Unit, which contradicts its own response description ("Integer DBID"). Observed drift only.
+      - operationId: null
+        observed: >-
+          The provider's served openapi.yaml (.../webresources/openapi.yaml, HTTP 200 application/yaml) is not
+          safely parseable by a YAML 1.1 loader: the `operator` enum ["<", ">", "="] is emitted as a bare
+          `- =` at lines 294, 430 and 586, which YAML resolves to the tag:yaml.org,2002:value type and
+          PyYAML's safe_load rejects. The JSON rendering at .../webresources/openapi.json is unaffected and
+          is the copy wired into apis.yml. Both are kept verbatim under openapi/_original/.
+      - operationId: reloadCache
+        observed: >-
+          A cache-reload administrative operation is exposed unauthenticated on the public API surface.
+actions:
+  - target: $
+    description: Add the info block the provider's own Swagger UI page supplies at render time.
+    update:
+      info:
+        title: Swiss food composition database API
+        version: 1.0.0
+        description: API for accessing data available in Swiss food composition database.
+        contact:
+          name: Federal Food Safety and Veterinary Office FSVO Info Desk
+          email: info@blv.admin.ch
+          url: https://naehrwertdaten.ch/en/contact/
+        termsOfService: https://naehrwertdaten.ch/en/legal-information/
+  - target: $
+    description: Add the servers block the provider's own Swagger UI page supplies at render time.
+    update:
+      servers:
+        - url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+          description: Production API host named in the FSVO API description document and injected by the provider's Swagger UI.
+  - target: $
+    description: Declare the tag set already used by the operations, which the served document leaves undeclared.
+    update:
+      tags:
+        - name: data
+          description: Food, value, category, ingredient and LanguaL retrieval operations.
+        - name: system
+          description: Reference data used across the database - components, component sets, groups, units, database version.
+        - name: stats
+          description: Aggregate counts over the database.
+        - name: system configuration
+          description: Administrative operations. Exposed without authentication on the public host.

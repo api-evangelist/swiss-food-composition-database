@@ -1,0 +1,39 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  SEARCHED the FSVO API description document (https://naehrwertdaten.ch/en/downloads/) and the Swagger UI
+  reference at https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS - neither documents a rate
+  limit, quota or throttling policy. PROBED live unauthenticated responses on 2026-08-27 and inspected the
+  full response header set.
+docs: https://naehrwertdaten.ch/en/downloads/
+limit_count: 0
+note: >-
+  No rate limit is published and none is signalled at runtime. The provider's own API description says
+  "API is free to use and allows unrestricted access" and "All of the available endpoints and methods are
+  nonrestricted, free to access". Live responses carry no X-RateLimit-*, no RateLimit-* and no Retry-After
+  header, and no 429 was observed. An honest zero: an agent integrating here has no runtime budget signal at
+  all, and must self-throttle on courtesy rather than on anything the API tells it.
+limits: []
+response_headers:
+  ratelimit_limit: null
+  ratelimit_remaining: null
+  ratelimit_reset: null
+  retry_after: null
+  observed_headers:
+    - access-control-allow-credentials
+    - access-control-allow-headers
+    - access-control-allow-methods
+    - access-control-allow-origin
+    - content-type
+    - date
+    - server
+    - x-powered-by
+exhaustion_status: null
+pagination_note: >-
+  getFoodsTurbo (GET /webresources/BLV-api/foods) accepts limit and offset, and getFoods / getCategorizedFoods
+  accept limit; unbounded requests return the whole result set. Result-set size is the only volume control
+  available to a client.
+evidence:
+  - url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/genericCount
+    status: 200
+    note: Full header dump contained no rate-limit header of any family.

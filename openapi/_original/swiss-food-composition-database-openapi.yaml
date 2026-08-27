@@ -1,0 +1,1115 @@
+openapi: 3.0.1
+paths:
+  /webresources/BLV-api/components:
+    get:
+      tags:
+      - system
+      summary: Get all used components
+      description: Returns a list of components used in system
+      operationId: getComponents
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which components should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of components
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentWithSets'
+  /webresources/BLV-api/values:
+    get:
+      tags:
+      - data
+      summary: Get all values from the given food
+      description: Returns a list of values from given food
+      operationId: getValues
+      parameters:
+      - name: DBID
+        in: query
+        description: DBID of the food which values should be returned
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: componentsetid
+        in: query
+        description: ID of the component set from which values should be returned
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: Language in which values should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of values
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValueFormatted'
+  /webresources/BLV-api/langualcodes:
+    get:
+      tags:
+      - data
+      summary: Get all langual codes associated with a particular food
+      description: Returns a list of langual codes associated with a particular food
+      operationId: getLangualCodes
+      parameters:
+      - name: DBID
+        in: query
+        description: DBID of the food, which Languals codes should be retrieved
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of langual codes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LangualDTO'
+  /webresources/BLV-api/topcategories:
+    get:
+      tags:
+      - data
+      summary: Get top level categories
+      description: Returns a list of top level categories used in system
+      operationId: getCategories
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which top level categories should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+  /webresources/BLV-api/sets:
+    get:
+      tags:
+      - system
+      summary: Get all used component sets
+      description: Returns a list of component sets used in system
+      operationId: getComponentSets
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which component sets would be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of component sets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentSet'
+  /webresources/BLV-api/categories:
+    get:
+      tags:
+      - data
+      summary: Get all used categories
+      description: Returns a list of categories used in system
+      operationId: getAllCategories
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which categories should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+  /webresources/BLV-api/subcategories/{id}:
+    get:
+      tags:
+      - data
+      summary: Get all subcategories of particular top level category
+      description: Returns a list of subcategories of particular top level category
+      operationId: getSubCategories
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which subcategories should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: id
+        in: path
+        description: ID of top level category
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+  /webresources/BLV-api/units:
+    get:
+      tags:
+      - system
+      summary: Get all used units
+      description: Returns a list of unit used in system
+      operationId: getUnits
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which unit should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of units
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Unit'
+  /webresources/BLV-api/foods_old:
+    get:
+      tags:
+      - data
+      summary: Get all old foods matching search criteria
+      description: Returns a list of old foods with synonyms and categories
+      operationId: getFoods
+      parameters:
+      - name: search
+        in: query
+        description: Search term to search through food names
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Top level category ID from which subcategories are specified
+          and values should be retrieved
+        schema:
+          type: integer
+          format: int32
+      - name: subcategory
+        in: query
+        description: List of subcategories ID, from which values should be taken of
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: component
+        in: query
+        description: ID of the component from which values should be returned
+        schema:
+          type: integer
+          format: int64
+      - name: operator
+        in: query
+        description: Operator to make comparison between food values and amount parameter
+        schema:
+          type: string
+          description: comparison operator
+          enum:
+          - <
+          - '>'
+          - =
+      - name: amount
+        in: query
+        description: Value taken into account in comparing value against comparisonOperator
+          specified
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: Language in which values should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: limit
+        in: query
+        description: Max number of results returned
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of foods with synonyms and categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodWithNamesSynonymesCategories'
+  /webresources/BLV-api/groups:
+    get:
+      tags:
+      - system
+      summary: Get all groups
+      description: Returns a list of groups used in system
+      operationId: getComponentGroups
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which component groups should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentGroup'
+  /webresources/BLV-api/fooddbid/{foodId}:
+    get:
+      tags:
+      - data
+      summary: Get DBID of the food using foodId
+      description: Returns a food DBID
+      operationId: getFoodDbIdByFoodId
+      parameters:
+      - name: foodId
+        in: path
+        description: ID of the food, which database ID should be retrieved
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Integer DBID
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Unit'
+  /webresources/BLV-api/foods:
+    get:
+      tags:
+      - data
+      summary: Get all foods matching search criteria
+      description: Returns a list of foods
+      operationId: getFoodsTurbo
+      parameters:
+      - name: type
+        in: query
+        description: Indicate if considered food should be generic
+        schema:
+          type: boolean
+      - name: search
+        in: query
+        description: Search term to search through food names
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Top level category ID from which subcategories are specified
+          and values should be retrieved
+        schema:
+          type: integer
+          format: int32
+      - name: subcategory
+        in: query
+        description: List of subcategories ID, from which values should be taken of
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: component
+        in: query
+        description: ID of the component from which values should be returned
+        schema:
+          type: integer
+          format: int64
+      - name: operator
+        in: query
+        description: Operator to make comparison between food values and amount parameter
+        schema:
+          type: string
+          description: comparison operator
+          enum:
+          - <
+          - '>'
+          - =
+      - name: amount
+        in: query
+        description: Value taken into account in comparing value against comparisonOperator
+          specified
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: Language in which value should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: limit
+        in: query
+        description: Max number of results returned
+        schema:
+          type: integer
+          format: int64
+      - name: offset
+        in: query
+        description: Offset of the first result returned
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of foods with synonyms and categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodWithNamesSynonymesCategories'
+  /webresources/BLV-api/versiondb:
+    get:
+      tags:
+      - system
+      summary: Get version of the database
+      description: Returns object indicating a version of the database
+      operationId: getVersiondb
+      responses:
+        "200":
+          description: List of units
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Versiondb'
+  /webresources/BLV-api/genericCount:
+    get:
+      tags:
+      - stats
+      summary: Get amount of generic foods
+      description: Returns a number of generic foods in database
+      operationId: genericCount
+      responses:
+        "200":
+          description: Two integers first indicating generic foods, the second one
+            not generic.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int32
+  /webresources/BLV-api/food/{DBID}:
+    get:
+      tags:
+      - data
+      summary: Get particular food
+      description: Returns particular food indicated by DBID
+      operationId: getFood
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which food should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: DBID
+        in: path
+        description: DBID of the food, which should be retrieved
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Food indicated by DBID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Food'
+  /webresources/BLV-api/categorizedfoods:
+    get:
+      tags:
+      - data
+      summary: Get all foods gathered by category and counted matching search criteria
+      description: Returns a list categories matching search criteria with number
+        of foods
+      operationId: getCategorizedFoods
+      parameters:
+      - name: type
+        in: query
+        description: Indicate if considered food should be generic
+        schema:
+          type: boolean
+      - name: search
+        in: query
+        description: Search term to search through food names
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Top level category ID from which subcategories are specified
+          and values should be retrieved
+        schema:
+          type: integer
+          format: int32
+      - name: subcategory
+        in: query
+        description: List of subcategories ID, from which values should be taken of
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: component
+        in: query
+        description: ID of the component from which values should be returned
+        schema:
+          type: integer
+          format: int64
+      - name: operator
+        in: query
+        description: Operator to make comparison between food values and amount parameter
+        schema:
+          type: string
+          description: comparison operator
+          enum:
+          - <
+          - '>'
+          - =
+      - name: amount
+        in: query
+        description: Value taken into account in comparing value against comparisonOperator
+          specified
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: Language in which categories should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: limit
+        in: query
+        description: Max number of results returned
+        schema:
+          type: integer
+          format: int64
+      - name: offset
+        in: query
+        description: Unused
+        schema:
+          type: integer
+          description: unused
+          format: int64
+      responses:
+        "200":
+          description: List of categories with number of foods
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryWithNumberOfFoodDTO'
+  /webresources/BLV-api/reloadCache:
+    get:
+      tags:
+      - system configuration
+      summary: Reload of the cache
+      description: Reloads the local database cache of the application. Use in case
+        of the faulty situations.
+      operationId: reloadCache
+      responses:
+        "200":
+          description: Indicator if cache reload completed successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /webresources/BLV-api/ingredients:
+    get:
+      tags:
+      - data
+      summary: Get all ingredients of particular food
+      description: Returns a list of ingredients of particular food
+      operationId: getIngredients
+      parameters:
+      - name: DBID
+        in: query
+        description: DBID of the food for which ingredients should be retrieved
+        required: true
+        schema:
+          type: integer
+          description: DBID of the food
+          format: int64
+      - name: lang
+        in: query
+        description: Language in which ingredient should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        "200":
+          description: List of ingredients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ingredient'
+  /webresources/BLV-api/value/{DBID}:
+    get:
+      tags:
+      - data
+      summary: Get particular value indicated by DBID
+      description: Returns a value
+      operationId: getValue
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which value should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      - name: DBID
+        in: path
+        description: DBID of the requested value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValueFormatted'
+  /webresources/BLV-api/source/{DBID}:
+    get:
+      tags:
+      - data
+      summary: Get source value of particular food component
+      description: Returns source value of particular food component
+      operationId: getValue_1
+      parameters:
+      - name: DBID
+        in: path
+        description: DBID of the food component which values should be returned
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Source value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceValueDTO'
+components:
+  schemas:
+    ComponentSet:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    ComponentWithSets:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sets:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentSet'
+    Component:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sortorder:
+          type: integer
+          format: int32
+        componentsets:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    Reference:
+      required:
+      - citation
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        citation:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+        title:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        authors:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        typeDescriptor:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+    ValueFormatted:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        value:
+          type: string
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        component:
+          $ref: '#/components/schemas/Component'
+        unit:
+          type: string
+        minimum:
+          type: string
+        maximum:
+          type: string
+        n:
+          type: number
+        derivationOfValue:
+          type: string
+        sourceInfoLevel:
+          type: integer
+          format: int32
+    LangualDTO:
+      type: object
+      properties:
+        letter:
+          type: string
+        description:
+          type: string
+        classification:
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    Unit:
+      required:
+      - code
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    FoodWithNamesSynonymesCategories:
+      required:
+      - generic
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        generic:
+          type: boolean
+        names:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Name'
+        synonyms:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Synonym'
+        categories:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    Name:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+    Synonym:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+        type:
+          type: string
+    ComponentGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        parentComponentGroup:
+          type: integer
+          format: int32
+        componentgroupidcomponent:
+          type: integer
+          format: int32
+        sort:
+          type: integer
+          format: int32
+        getChildComponentGroup:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ComponentGroup'
+    Versiondb:
+      required:
+      - idversion
+      - versiontext
+      type: object
+      properties:
+        idversion:
+          type: integer
+          format: int32
+        versiontext:
+          maxLength: 10
+          minLength: 1
+          type: string
+    Food:
+      required:
+      - isgeneric
+      - isrecipe
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        ncf:
+          type: number
+        facf:
+          type: number
+        isgeneric:
+          type: boolean
+        isrecipe:
+          type: boolean
+        synonyms:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Synonym'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/Value'
+        matrixunitcode:
+          type: string
+        specificgravity:
+          type: number
+        yieldfactor:
+          type: number
+        foodid:
+          type: integer
+          format: int32
+    Value:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        value:
+          type: number
+        rawValue:
+          type: number
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        component:
+          $ref: '#/components/schemas/Component'
+        unit:
+          $ref: '#/components/schemas/Unit'
+        minimum:
+          type: number
+        maximum:
+          type: number
+        n:
+          type: number
+        contrMethodTypes:
+          type: string
+        valueTypeCode:
+          type: string
+        contributingvalues:
+          type: string
+        contributingvaluetypes:
+          type: string
+        methodIndicatorCode:
+          type: string
+        containformula:
+          type: boolean
+        isborrowed:
+          type: boolean
+        isrescaled:
+          type: boolean
+        isfixed:
+          type: boolean
+        methodtypecode:
+          type: string
+    CategoryWithNumberOfFoodDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int32
+        categoryName:
+          type: string
+        numberOfFoods:
+          type: integer
+    FoodName:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        issearchable:
+          type: boolean
+    Ingredient:
+      required:
+      - isrecipe
+      type: object
+      properties:
+        foodid:
+          $ref: '#/components/schemas/FoodName'
+        amount:
+          type: number
+        percent:
+          type: number
+        unit:
+          type: string
+        isrecipe:
+          type: boolean
+        dummyprepmethods:
+          type: string
+    SourceValueDTO:
+      type: object
+      properties:
+        acquistionTypeDescriptor:
+          type: string
+        methodIndicatorDescriptor:
+          type: string
+        references:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        updated:
+          type: string
+          format: date-time
+        minimum:
+          type: number
+        maximum:
+          type: number
+        n:
+          type: number
+        methodindicatorcode:
+          type: string
+        valuetypecode:
+          type: string
+        contributingvalues:
+          type: string
+        contributingvaluetypes:
+          type: string
+        methodtypecode:
+          type: string
+        containformula:
+          type: boolean
+        isborrowed:
+          type: boolean
+        isrescaled:
+          type: boolean
+        isfixed:
+          type: boolean
+        contrMethodTypes:
+          type: string

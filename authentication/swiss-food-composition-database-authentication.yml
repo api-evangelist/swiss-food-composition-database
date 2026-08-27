@@ -1,0 +1,41 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  The FSVO's own API description document, "The Swiss Food Composition Database API" (published at
+  https://naehrwertdaten.ch/en/downloads/), which states: "API is free to use and allows unrestricted access"
+  and "All of the available endpoints and methods are nonrestricted, free to access". Corroborated by the
+  served OpenAPI 3.0.1 document, which declares no components.securitySchemes and no top-level security
+  requirement, and by live anonymous calls on 2026-08-27 that returned 200 with data.
+docs: https://naehrwertdaten.ch/en/downloads/
+summary: >-
+  No authentication of any kind. There is no API key, no OAuth, no signup and no account. Every one of the 21
+  operations is a public read that succeeds anonymously.
+schemes: []
+auth_required: false
+signup_required: false
+credential_types: []
+transport:
+  https: true
+  tls_version: TLSv1.3
+  http_to_https_redirect: true
+cors:
+  enabled: true
+  access_control_allow_origin: '*'
+  access_control_allow_credentials: true
+  access_control_allow_methods: GET, PUT, POST, OPTIONS
+  note: >-
+    Observed on live responses 2026-08-27. The API is directly callable from a browser, which is how the
+    provider's own Swagger UI and search application consume it.
+evidence:
+  - url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/versiondb
+    status: 200
+    note: Anonymous GET returned {"idversion":51,"versiontext":"V 7.1"} with no credential supplied.
+  - url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.json
+    status: 200
+    note: Served OpenAPI declares no securitySchemes.
+observations:
+  - >-
+    An administrative operation, GET /webresources/BLV-api/reloadCache ("Reloads the local database cache of
+    the application"), is exposed on the same unauthenticated public surface as the read operations. It is
+    tagged "system configuration" in the provider's own spec. This is recorded as an observation about the
+    published contract; API Evangelist did not invoke it.

@@ -1,0 +1,136 @@
+generated: '2026-08-27'
+method: derived
+source: >-
+  DERIVED from the provider's served OpenAPI 3.0.1 document
+  (openapi/swiss-food-composition-database-openapi.json) and from live unauthenticated response bodies probed
+  on 2026-08-27. SEARCHED the FSVO API description document, https://naehrwertdaten.ch/en/informations/,
+  https://naehrwertdaten.ch/en/versions-and-updates/ and https://naehrwertdaten.ch/en/legal-information/ for
+  compliance claims. Reward-only: nothing is asserted that a fetched artifact does not show.
+standards:
+  - id: openapi
+    conforms: true
+    version: 3.0.1
+    evidence: >-
+      https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.json returns
+      HTTP 200 application/json, "openapi":"3.0.1", 20 paths / 21 operations, 19 component schemas. A YAML
+      rendering of the same document is served at .../webresources/openapi.yaml.
+  - id: swagger-ui
+    conforms: true
+    evidence: >-
+      https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS serves Swagger UI 4.5.0 rendering the
+      document above.
+  - id: openapi-yaml-parseable
+    conforms: false
+    evidence: >-
+      The served openapi.yaml renders the operator enum ["<", ">", "="] as a bare `- =` (lines 294, 430, 586),
+      which a YAML 1.1 loader resolves to tag:yaml.org,2002:value and safe parsers reject. Consumers must use
+      the JSON rendering. Verified 2026-08-27 against the verbatim copy in openapi/_original/.
+  - id: rest
+    conforms: true
+    evidence: All 21 operations are HTTP GET over resource-oriented paths returning application/json.
+  - id: cors
+    conforms: true
+    evidence: >-
+      Live responses carry access-control-allow-origin "*", access-control-allow-methods
+      "GET, PUT, POST, OPTIONS" and access-control-allow-headers including Authorization and Content-Type.
+  - id: oauth2
+    conforms: false
+    evidence: No securitySchemes in the OpenAPI; no /.well-known/oauth-authorization-server (404 on every host).
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on every host probed.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      No problem+json. The spec documents only 200 responses; a probed 404 (GET .../BLV-api/food/999999999)
+      returns an empty body with content-length 0 and no error media type.
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      getFoodsTurbo (GET /webresources/BLV-api/foods) declares limit and offset query parameters;
+      getFoods and getCategorizedFoods declare limit (getCategorizedFoods' own offset is documented "Unused").
+      No total-count field, no Link header and no cursor - offset/limit only, and only on the search operations.
+  - id: idempotency
+    conforms: na
+    evidence: Read-only API. All 21 operations are GET; there is no write surface to make idempotent.
+  - id: rfc8594-sunset
+    conforms: false
+    evidence: No Deprecation or Sunset headers observed; no deprecation policy published.
+  - id: rfc9116-security-txt
+    conforms: partial
+    evidence: >-
+      The publishing office serves https://www.blv.admin.ch/.well-known/security.txt (200, with Contact,
+      Policy, Encryption, Expires and Preferred-Languages). Neither naehrwertdaten.ch nor the API host serves
+      one (404).
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON arrays and objects; no JSON:API envelope, media type or relationship structure.
+  - id: fhir
+    conforms: false
+    evidence: Not a clinical API; no FHIR resource shapes in the contract.
+  - id: scim
+    conforms: false
+    evidence: No identity surface.
+  - id: odata
+    conforms: false
+    evidence: No $metadata surface and no OData query options.
+domain_standards:
+  - id: langual
+    name: LanguaL international framework for food description
+    conforms: true
+    evidence: >-
+      The contract declares a first-class LanguaL surface: GET /webresources/BLV-api/langualcodes
+      (operationId getLangualCodes) returning LangualDTO objects with the LanguaL facet structure
+      {letter, description, classification}. Probed live 2026-08-27 with DBID=351915 ("Apple, fresh"):
+      returns facet-letter rows such as {"letter":"A","description":"PRODUCT TYPE",
+      "classification":"FRUIT OR FRUIT PRODUCT (EUROFIR) (A0833), FRUIT OR FRUIT PRODUCT (US CFR) (A0143)"}.
+      This is the domain standard for machine-readable food description, and it is expressed in the API
+      contract itself, not merely claimed on a marketing page.
+  - id: efsa-foodex2
+    name: EFSA FoodEx2 food classification
+    conforms: true
+    evidence: >-
+      The same /langualcodes response carries EFSA FoodEx2 terms verbatim, e.g.
+      {"letter":"A","description":"020 - CEREALS AND CEREAL PRIMARY DERIVATIVES (EFSA FOODEX2)"} and
+      "840 - BISCUITS, RUSKS AND COOKIES FOR CHILDREN (EFSA FOODEX2)". An EU-regulated consumer of food
+      composition data can join on FoodEx2 without a bespoke connector.
+  - id: eurofir
+    name: EuroFIR food composition data standard (component tagnames + food classification)
+    conforms: true
+    evidence: >-
+      Two independent signatures. (1) GET /webresources/BLV-api/components returns EuroFIR / INFOODS component
+      tagnames in the code field - ALC (Alcohol), CA (Calcium), CARTB (Beta-carotene), CHO (Carbohydrates,
+      available), CHORL (Cholesterol), ID (Iodide) - alongside the localised names. (2) LanguaL classification
+      strings are labelled "(EUROFIR)". The FSVO's own version history records the alignment explicitly:
+      version V 2.11 (11.11.2008) states the database was adapted "to the new EuroFIR standards"
+      (https://naehrwertdaten.ch/en/versions-and-updates/).
+  - id: value-provenance
+    name: Per-value source, method and reference documentation (EuroFIR-style data quality documentation)
+    conforms: true
+    evidence: >-
+      Every nutrient value carries its own provenance in the contract: the Value / ValueFormatted schemas
+      expose references[] (citation, title, authors, typeDescriptor), valueTypeCode, methodIndicatorCode,
+      methodtypecode, minimum, maximum, n, isborrowed, isrescaled, isfixed, and contributingvalues, and a
+      dedicated GET /webresources/BLV-api/source/{DBID} returns the SourceValueDTO for one value. Probed
+      2026-08-27: "Apple, fresh" calcium cites "Anses - Table de composition nutritionnelle des aliments
+      Ciqual 2020" with methodIndicatorCode MIR003. Very few food APIs publish borrowed-value flags and
+      per-value citations at all.
+compliance:
+  published_certifications: []
+  note: >-
+    No SOC 2, ISO 27001 or comparable certification is published, and no trust centre exists - this is a
+    Swiss federal office publication, governed by federal law and the site's legal-information page
+    (https://naehrwertdaten.ch/en/legal-information/) rather than by a commercial assurance programme.
+    No Compliance pointer is emitted for that reason.
+  data_protection: >-
+    https://naehrwertdaten.ch/en/legal-information/ states adherence to Article 13 of the Swiss Federal
+    Constitution and Swiss data protection legislation, and records BUEPF six-month connection-data retention.
+    The API itself is anonymous and processes no personal data.
+regulatory_context:
+  jurisdiction: Switzerland
+  publisher: Federal Food Safety and Veterinary Office (FSVO / BLV)
+  note: >-
+    Nutrient declaration in Switzerland is governed by the Foodstuffs and Utility Articles Act and its
+    ordinances; the database's "Food labelling" component set (id 3, observed live at
+    /webresources/BLV-api/sets) is the subset aligned to declaration requirements. Recorded as context,
+    not as a conformance claim.

@@ -1,0 +1,161 @@
+generated: '2026-08-27'
+method: derived
+source: >-
+  DERIVED from components.schemas and the $ref graph of the served OpenAPI 3.0.1 document
+  (openapi/swiss-food-composition-database-openapi.json), corroborated against live response bodies probed
+  anonymously on 2026-08-27 (GET /food/351915, /components, /sets, /topcategories, /langualcodes, /foods).
+note: >-
+  Identifiers are plain int64 with no prefix scheme. Two distinct identifier spaces exist and confusing them
+  is the single most likely integration error: DBID is the internal database identifier used by almost every
+  operation, while foodid is the public food ID shown in the Excel export and the search application.
+  GET /webresources/BLV-api/fooddbid/{foodId} exists solely to translate the second into the first
+  (probed: /fooddbid/10 returns the bare integer 351894).
+identifier_spaces:
+  - name: DBID
+    description: Internal database identifier for a food, value or component. Required by getFood, getValues, getValue, getValue_1, getLangualCodes and getIngredients.
+    type: integer/int64
+  - name: foodid
+    description: Public food ID, also present on Food.foodid. Resolve to a DBID with getFoodDbIdByFoodId before calling anything else.
+    type: integer/int64
+entities:
+  - name: Food
+    description: One food or recipe in the database, in one of four languages.
+    fields: [id, name, foodid, ncf, facf, isgeneric, isrecipe, matrixunitcode, specificgravity, yieldfactor, synonyms, categories, values]
+    operations: [getFood, getFoodsTurbo, getFoods, getFoodDbIdByFoodId]
+  - name: FoodWithNamesSynonymesCategories
+    description: Search-result projection of a food. Declared shape is {id, generic, names[], synonyms[], categories[]}.
+    fields: [id, generic, names, synonyms, categories]
+    operations: [getFoodsTurbo, getFoods]
+    observed_drift: >-
+      Live search responses return {id, foodName, generic, categoryNames, amount, foodid, valueTypeCode}
+      instead of the declared names[]/synonyms[]/categories[] arrays. Recorded, not corrected.
+  - name: Value
+    description: A single nutrient measurement for a food, with its full provenance.
+    fields: [id, value, rawValue, references, component, unit, minimum, maximum, n, valueTypeCode, methodIndicatorCode, methodtypecode, contrMethodTypes, contributingvalues, contributingvaluetypes, containformula, isborrowed, isrescaled, isfixed]
+    operations: [getFood, getValues]
+  - name: ValueFormatted
+    description: Display-formatted nutrient value as shown on the public website.
+    fields: [id, value, references, component, unit, minimum, maximum, n, derivationOfValue, sourceInfoLevel]
+    operations: [getValues, getValue]
+  - name: SourceValueDTO
+    description: Source/method record behind one nutrient value.
+    fields: [acquistionTypeDescriptor, methodIndicatorDescriptor, references, updated, minimum, maximum, n, methodindicatorcode, valuetypecode, contributingvalues, contributingvaluetypes, methodtypecode, containformula, isborrowed, isrescaled, isfixed, contrMethodTypes]
+    operations: [getValue_1]
+  - name: Reference
+    description: Bibliographic citation for a value (publication, webpage, laboratory report).
+    fields: [id, citation, title, authors, typeDescriptor]
+    operations: [getFood, getValues, getValue, getValue_1]
+  - name: Component
+    description: A nutrient. Carries a EuroFIR/INFOODS-style tagname in code.
+    fields: [id, name, code, group, unit, sortorder, componentsets]
+    operations: [getComponents]
+  - name: ComponentWithSets
+    description: Component projection carrying its component-set membership inline.
+    fields: [id, name, code, group, unit, sets]
+    operations: [getComponents]
+  - name: ComponentSet
+    description: A named nutrient bundle. Live values - Standard (1), All nutrients (2), Food labelling (3).
+    fields: [id, name]
+    operations: [getComponentSets]
+  - name: ComponentGroup
+    description: Self-referencing nutrient group hierarchy.
+    fields: [id, name, parentComponentGroup, componentgroupidcomponent, sort, getChildComponentGroup]
+    operations: [getComponentGroups]
+  - name: Unit
+    description: Measurement unit for a nutrient value (e.g. milligram / mg).
+    fields: [id, name, code]
+    operations: [getUnits]
+  - name: Category
+    description: Food category. Two levels - 19 top-level categories and 106 subcategories.
+    fields: [id, name]
+    operations: [getCategories, getAllCategories, getSubCategories]
+  - name: CategoryWithNumberOfFoodDTO
+    description: Category with a count of matching foods, for faceted search.
+    fields: [categoryId, categoryName, numberOfFoods]
+    operations: [getCategorizedFoods]
+  - name: Ingredient
+    description: One component food of a recipe, with amount and percentage.
+    fields: [foodid, amount, percent, unit, isrecipe, dummyprepmethods]
+    operations: [getIngredients]
+  - name: LangualDTO
+    description: LanguaL facet descriptor for a food, carrying EFSA FoodEx2 and EuroFIR classification strings.
+    fields: [letter, description, classification]
+    operations: [getLangualCodes]
+  - name: Name
+    description: Localised food name.
+    fields: [id, term]
+  - name: FoodName
+    description: Food name with a searchability flag.
+    fields: [id, name, issearchable]
+  - name: Synonym
+    description: Alternative food name, typed.
+    fields: [id, term, type]
+  - name: Versiondb
+    description: Published database version. Live 2026-08-27 - {"idversion":51,"versiontext":"V 7.1"}.
+    fields: [idversion, versiontext]
+    operations: [getVersiondb]
+relationships:
+  - from: Food
+    to: Value
+    type: has_many
+    via: values
+  - from: Food
+    to: Category
+    type: has_many
+    via: categories
+  - from: Food
+    to: Synonym
+    type: has_many
+    via: synonyms
+  - from: Food
+    to: Name
+    type: has_many
+    via: names
+  - from: Food
+    to: Ingredient
+    type: has_many
+    via: getIngredients(DBID) - recipe foods only (isrecipe true)
+  - from: Food
+    to: LangualDTO
+    type: has_many
+    via: getLangualCodes(DBID)
+  - from: Value
+    to: Component
+    type: has_one
+    via: component
+  - from: Value
+    to: Unit
+    type: has_one
+    via: unit
+  - from: Value
+    to: Reference
+    type: has_many
+    via: references
+  - from: Value
+    to: SourceValueDTO
+    type: has_one
+    via: getValue_1(DBID)
+  - from: Component
+    to: ComponentGroup
+    type: belongs_to
+    via: group
+  - from: Component
+    to: Unit
+    type: belongs_to
+    via: unit
+  - from: Component
+    to: ComponentSet
+    type: has_many
+    via: componentsets / sets
+  - from: ComponentGroup
+    to: ComponentGroup
+    type: belongs_to
+    via: parentComponentGroup
+  - from: Category
+    to: Category
+    type: has_many
+    via: getSubCategories(id)
+  - from: Ingredient
+    to: Food
+    type: belongs_to
+    via: foodid

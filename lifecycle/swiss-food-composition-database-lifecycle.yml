@@ -1,0 +1,62 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://naehrwertdaten.ch/en/versions-and-updates/ (full published version history, 1.0 in 2002 through
+  V 7.1 on 01.07.2026), https://naehrwertdaten.ch/en/downloads/, the FSVO API description document, and the
+  live GET /webresources/BLV-api/versiondb endpoint. Fetched and probed 2026-08-27.
+docs: https://naehrwertdaten.ch/en/versions-and-updates/
+versioning:
+  api:
+    scheme: none
+    detail: >-
+      No version segment in the API path and no info.version in the served document. The provider's Swagger
+      UI page labels it 1.0.0 client-side. The API itself has never been re-versioned since it was introduced
+      with data version V5.1 on 16.06.2015 ("Possibility to retrieve database through an API").
+  data:
+    scheme: major.minor
+    current: V 7.1
+    released: '2026-07-01'
+    cadence: >-
+      Roughly annual in recent years - V 7.1 (01.07.2026), V 7.0 (01.07.2025), V 6.5 (27.06.2023),
+      V 6.4 (13.06.2022), V 6.3 (02.03.2021), V 6.2 (31.03.2020).
+    runtime_discovery: GET /webresources/BLV-api/versiondb returns {"idversion":51,"versiontext":"V 7.1"}
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No deprecation policy, no notice period, no Sunset or Deprecation headers, and no operation is flagged
+    deprecated in the OpenAPI. The one clear legacy surface - GET /webresources/BLV-api/foods_old, whose own
+    summary calls it "old foods" - carries no deprecation marker and no removal date. Breaking changes to the
+    DATA are, by contrast, well documented: the version history explicitly records unit changes
+    (Vitamin A RE/RAE and beta-carotene moved to plain micrograms in V 7.0), a redefinition of Vitamin E in
+    V 6.5, a category rename in V 7.0 ("Meat substitutes" to "Plant protein foods and animal product
+    substitutes"), and the removal of branded products in V 6.0. Category IDs and food IDs are therefore not
+    guaranteed stable across data versions, and nothing in the API signals that.
+  deprecated_operations: []
+sla:
+  published: false
+  detail: >-
+    No SLA and no uptime commitment. https://naehrwertdaten.ch/en/legal-information/ expressly disclaims
+    warranty of accuracy, reliability, up-to-dateness or completeness, and reserves the right "at any time
+    without prior notice to change, supplement or delete portions of the contents or to discontinue its
+    publication at any time".
+status_page:
+  published: false
+  detail: >-
+    No status page on naehrwertdaten.ch, on the API host, or on the FoodCASE platform. No StatusPage pointer
+    is emitted for that reason. The closest runtime health signal available is GET
+    /webresources/BLV-api/versiondb, which is cheap and returns a two-field object.
+support:
+  channel: https://naehrwertdaten.ch/en/contact/
+  detail: FSVO Info Desk, +41 58 463 30 33, info@blv.admin.ch, Monday to Friday. No developer-specific channel.
+maturity:
+  api_introduced: '2015-06-16'
+  api_introduced_source: >-
+    https://naehrwertdaten.ch/en/versions-and-updates/ - V5.1 (16.06.2015) lists "Possibility to retrieve
+    database through an API (application programming interface)".
+  publisher_change:
+    date: '2014-02-01'
+    detail: >-
+      The database transferred from the Federal Office of Public Health FOPH to the Federal Food Safety and
+      Veterinary Office FSVO.

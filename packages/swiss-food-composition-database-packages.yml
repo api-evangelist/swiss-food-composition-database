@@ -1,0 +1,53 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  npm registry search (registry.npmjs.org/-/v1/search) for "swiss food composition" and "naehrwertdaten";
+  PyPI JSON metadata endpoint for swiss-food-composition, naehrwertdaten and blv-api (all 404); GitHub
+  repository search for naehrwertdaten / "swiss food composition"; and the FSVO's own Downloads page
+  (https://naehrwertdaten.ch/en/downloads/) and API description document, neither of which names a client
+  library. Probed 2026-08-27.
+official_package_count: 0
+note: >-
+  The Federal Food Safety and Veterinary Office publishes NO first-party client library in any registry.
+  The API description document it publishes tells integrators to call the JSON REST endpoints directly.
+  Everything below is third-party, source-only (no npm/PyPI/RubyGems/crates.io/Maven/NuGet/Go module
+  release exists for any of them), and is recorded as an ecosystem observation, not as a provider SDK.
+  Registry version fields are null because none of these are published to a package registry at all.
+packages: []
+third_party:
+  - language: go
+    registry: github
+    name: balle/goSwissNutrientDb
+    url: https://github.com/balle/goSwissNutrientDb
+    official: false
+    version: null
+    published: 2026-06-19
+    note: >-
+      Community Go client for naehrwertdaten.ch. Not published to a Go module proxy under a vanity path;
+      version is null because there is no registry release to read. Date is the repository's last push.
+  - language: php
+    registry: github
+    name: ahmedfadhil/Swiss-Food-Composition-Database-API
+    url: https://github.com/ahmedfadhil/Swiss-Food-Composition-Database-API
+    official: false
+    version: null
+    published: 2015-01-23
+    note: >-
+      Community PHP wrapper, last pushed 2015 - a decade older than the current V 7.1 data release and the
+      current BLV_WebApp_WS API surface. Not on Packagist.
+  - language: data
+    registry: github
+    name: foodopendata/food-composition-ch
+    url: https://github.com/foodopendata/food-composition-ch
+    official: false
+    version: null
+    published: 2019-03-05
+    note: Third-party Frictionless Data Package repackaging of the published Excel export. Not a client library.
+  - language: data
+    registry: github
+    name: rowich/SwissfoodDB
+    url: https://github.com/rowich/SwissfoodDB
+    official: false
+    version: null
+    published: 2019-04-29
+    note: Third-party normalised relational representation of the published Excel export. Not a client library.

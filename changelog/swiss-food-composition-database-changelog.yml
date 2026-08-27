@@ -1,0 +1,102 @@
+generated: '2026-08-27'
+method: searched
+source: https://naehrwertdaten.ch/en/versions-and-updates/ (HTTP 200, fetched 2026-08-27)
+docs: https://naehrwertdaten.ch/en/versions-and-updates/
+scheme: major.minor data releases, dated, published as an accordion on the FSVO site
+current_version: V 7.1
+current_released: '2026-07-01'
+note: >-
+  The changelog tracks the DATA, not the API. No API changelog exists. Entries below are the recent window;
+  the provider's page carries the full history back to V 1.0 (10.09.2002). Breaking-change flags are read
+  from the provider's own wording - a unit change, a nutrient redefinition or a category rename breaks a
+  consumer that pinned to the old semantics.
+entries:
+  - version: V 7.1
+    date: '2026-07-01'
+    breaking: false
+    additions:
+      - Niacin equivalent values now published.
+      - 27 new generic foods.
+      - More selenium and fatty acid values.
+      - Retention factors added for certain cooking methods.
+    highlights:
+      - Recipes and foods in the Biscuits and Cakes, pies and pastries categories reviewed and updated.
+  - version: V 7.0
+    date: '2025-07-01'
+    breaking: true
+    breaking_detail:
+      - >-
+        Vitamin A RE and RAE values and beta-carotene equivalents are now expressed in plain micrograms rather
+        than micrograms-RE and micrograms-BCE; the non-internationally-recognised units were abandoned.
+      - >-
+        The category "Meat substitutes" was replaced by "Plant protein foods and animal product substitutes"
+        with four new subcategories, changing the category tree returned by getCategories/getSubCategories.
+    additions:
+      - Values for linoleic acid, alpha-linolenic acid, EPA and DHA.
+      - New vitamin and mineral analyses for meat and dairy substitutes and breakfast cereals, from two independent laboratories.
+      - 70 new generic foods.
+    highlights:
+      - Average Foods recalculated on new Swiss food consumption statistics; fresh vegetable values updated.
+  - version: V 6.5
+    date: '2023-06-27'
+    breaking: true
+    breaking_detail:
+      - >-
+        Vitamin E now reports alpha-tocopherol content only, no longer counting other tocopherols or
+        tocotrienols - a redefinition of an existing nutrient, aligning with the new Swiss reference values.
+    additions:
+      - New vitamin and mineral analyses for tofu, lake fish, vegetables and potatoes.
+      - New foods in the meat-substitute and milk-substitute categories.
+    highlights:
+      - Corrected 17.03.2023 - zinc value for food 13420 "Beer, non-alcoholic".
+  - version: V 6.4
+    date: '2022-06-13'
+    breaking: false
+    additions:
+      - 2020 Swiss Vitamin Institute vitamin data for fruit, dried fruit, vegetables, eggs and tofu.
+      - Selenium content of eggs from the FSVO laboratory.
+      - New foods in fresh fruit, cooked fruit, bread and bakery products, breakfast cereals.
+    highlights:
+      - Obsolete foods and branded foods with a generic equivalent were REMOVED - existing IDs disappear.
+  - version: V 6.3
+    date: '2021-03-02'
+    breaking: false
+    additions:
+      - About thirty new generic foods.
+      - 2019 Swiss Vitamin Institute vitamin data for fruits, vegetables, tofu, oils and nuts; FSVO mineral data for eggs.
+  - version: V 6.2
+    date: '2020-03-31'
+    breaking: false
+    additions:
+      - 55 new generic foods.
+      - 2019 Swiss Vitamin Institute vitamin analyses.
+      - New nutrient retention factors used in recipe calculation.
+    highlights:
+      - Published for the printed Swiss nutritional composition table 2020; not published on the website.
+  - version: V 6.1
+    date: '2019-03-28'
+    breaking: false
+    highlights:
+      - Correction of a calculation error in the water content of various foods.
+  - version: V 6.0
+    date: '2019-02-27'
+    breaking: true
+    breaking_detail:
+      - >-
+        Branded products were removed with few exceptions (alcoholic drinks), taking the database from ~10,600
+        entries to 1,096 foodstuffs. Any consumer keyed on branded-product IDs lost them.
+      - Protein contents recalculated on the legally stipulated 6.25 factor.
+    additions:
+      - Salt content reported alongside sodium.
+      - Vitamin A Activity RAE added alongside RE.
+      - Swiss Vitamin Institute data and 2014 Selenium Monitoring data listed.
+    highlights:
+      - Relaunched on a newly designed website.
+api_milestones:
+  - version: V 5.1
+    date: '2015-06-16'
+    detail: >-
+      "Possibility to retrieve database through an API (application programming interface)" - the first
+      published API for this database.
+  - date: '2014-02-01'
+    detail: Publisher changed from the Federal Office of Public Health FOPH to the FSVO.

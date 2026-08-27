@@ -1,0 +1,35 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://naehrwertdaten.ch/en/informations/ ("The Federal Food Safety and Veterinary Office FSVO provides the
+  data in four languages ... and free of charge to all interested parties. The data may also be used for
+  commercial purposes ... and scientific purposes, subject to acknowledgment of the source."),
+  https://naehrwertdaten.ch/en/downloads/ ("Downloading is free of charge and the data may also be used for
+  commercial purposes"), and the FSVO API description document ("API is free to use and allows unrestricted
+  access"). Fetched 2026-08-27.
+docs: https://naehrwertdaten.ch/en/informations/
+plan_count: 1
+note: >-
+  The FSVO publishes no pricing page, no plan tiers and no commercial terms, because there is nothing to
+  price: this is a Swiss federal open-data publication. There is no paid tier, no enterprise tier and no
+  "contact us" gate. The single plan below is the published free-of-charge terms, not an inferred tier.
+plans:
+  - name: Free (public federal open data)
+    price: 0
+    currency: CHF
+    billing_period: none
+    signup_required: false
+    quota: unlimited
+    overage: none
+    commercial_use: true
+    scientific_use: true
+    conditions:
+      - Acknowledgement of the source is required.
+      - >-
+        Copyright is held by the Federal authorities of the Swiss Confederation; see
+        https://naehrwertdaten.ch/en/legal-information/ for the liability and copyright terms.
+    includes:
+      - Full JSON REST API (21 operations), unauthenticated.
+      - Excel export of the complete database (Version 7.1).
+      - Public search web application in German, French, Italian and English.
+    source: https://naehrwertdaten.ch/en/informations/

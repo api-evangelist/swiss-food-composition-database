@@ -1,0 +1,127 @@
+generated: '2026-08-27'
+method: derived
+status: candidate
+source: >-
+  DERIVED from the provider's own OpenAPI 3.0.1 document at
+  https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.json (saved verbatim at
+  openapi/swiss-food-composition-database-openapi.json). Searched for a first-party server on 2026-08-27 -
+  the FSVO Downloads page, the published API description document, the Swagger UI docs host and web search -
+  and found none.
+deployment:
+  mode: none
+  endpoint:
+  install:
+  package:
+  auth: none
+  verified: derived
+note: >-
+  The Federal Food Safety and Veterinary Office ships NO MCP server, hosted or stdio. The tools below are a
+  candidate mapping API Evangelist derived from the 21 published REST operations; nothing here is served by
+  the provider and no endpoint has been invented. Because the API is fully anonymous, read-only and
+  CORS-open (access-control-allow-origin: *), a server built from this spec needs no credential handling at
+  all. Third-party MCP servers that wrap this database exist (e.g. https://github.com/clement8426/swiss-apis-mcp),
+  but they are community projects, not FSVO surfaces, and are not counted as a provider deployment.
+surfaces:
+  openapi: openapi/swiss-food-composition-database-openapi.json
+  base_url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+  auth: none
+tools:
+  - name: search_foods
+    description: Search foods by name, category, subcategory or nutrient threshold; paginated.
+    rest: getFoodsTurbo
+    method: GET
+    path: /webresources/BLV-api/foods
+  - name: get_food
+    description: Retrieve one food by its database ID, with values, categories and synonyms.
+    rest: getFood
+    method: GET
+    path: /webresources/BLV-api/food/{DBID}
+  - name: get_food_dbid
+    description: Resolve a public food ID to the internal database ID used by the other operations.
+    rest: getFoodDbIdByFoodId
+    method: GET
+    path: /webresources/BLV-api/fooddbid/{foodId}
+  - name: get_food_values
+    description: Return the nutrient values of one food for a given component set.
+    rest: getValues
+    method: GET
+    path: /webresources/BLV-api/values
+  - name: get_value
+    description: Retrieve one formatted nutrient value by database ID.
+    rest: getValue
+    method: GET
+    path: /webresources/BLV-api/value/{DBID}
+  - name: get_value_source
+    description: Retrieve the source/provenance record behind one nutrient value.
+    rest: getValue_1
+    method: GET
+    path: /webresources/BLV-api/source/{DBID}
+  - name: get_food_ingredients
+    description: Return the ingredient breakdown of a recipe food.
+    rest: getIngredients
+    method: GET
+    path: /webresources/BLV-api/ingredients
+  - name: get_langual_codes
+    description: Return the LanguaL thesaurus codes describing one food.
+    rest: getLangualCodes
+    method: GET
+    path: /webresources/BLV-api/langualcodes
+  - name: list_top_categories
+    description: List the top-level food categories.
+    rest: getCategories
+    method: GET
+    path: /webresources/BLV-api/topcategories
+  - name: list_subcategories
+    description: List the subcategories of one top-level category.
+    rest: getSubCategories
+    method: GET
+    path: /webresources/BLV-api/subcategories/{id}
+  - name: list_categories
+    description: List every category used in the database.
+    rest: getAllCategories
+    method: GET
+    path: /webresources/BLV-api/categories
+  - name: list_categorized_foods
+    description: Return matching foods grouped by category with per-category counts.
+    rest: getCategorizedFoods
+    method: GET
+    path: /webresources/BLV-api/categorizedfoods
+  - name: list_components
+    description: List the nutrients (components) available, with their unit, group and component sets.
+    rest: getComponents
+    method: GET
+    path: /webresources/BLV-api/components
+  - name: list_component_sets
+    description: List the component sets (Standard, All nutrients, Food labelling).
+    rest: getComponentSets
+    method: GET
+    path: /webresources/BLV-api/sets
+  - name: list_component_groups
+    description: List the nutrient group hierarchy.
+    rest: getComponentGroups
+    method: GET
+    path: /webresources/BLV-api/groups
+  - name: list_units
+    description: List the measurement units used for nutrient values.
+    rest: getUnits
+    method: GET
+    path: /webresources/BLV-api/units
+  - name: get_database_version
+    description: Return the published version of the database (e.g. V 7.1).
+    rest: getVersiondb
+    method: GET
+    path: /webresources/BLV-api/versiondb
+  - name: get_generic_count
+    description: Return the count of generic versus non-generic foods.
+    rest: genericCount
+    method: GET
+    path: /webresources/BLV-api/genericCount
+excluded_operations:
+  - rest: getFoods
+    path: /webresources/BLV-api/foods_old
+    reason: Superseded legacy search operation ("old foods"); getFoodsTurbo is the current one.
+  - rest: reloadCache
+    path: /webresources/BLV-api/reloadCache
+    reason: >-
+      Administrative cache-reload operation exposed unauthenticated on the public host. Deliberately excluded
+      from any agent tool surface - it changes server state and no agent should be able to invoke it.

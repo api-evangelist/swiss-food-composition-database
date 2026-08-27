@@ -1,0 +1,74 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  Direct unauthenticated probes on 2026-08-27 of every host in this profile - the public website
+  (naehrwertdaten.ch), the API host (api.webapp.prod.blv.foodcase-services.com), the web application host
+  (webapp.prod.blv.foodcase-services.com) and the publishing federal office (www.blv.admin.ch, the FSVO,
+  named as Publisher on https://naehrwertdaten.ch/en/about/).
+note: >-
+  Neither the website nor the API host serves any /.well-known document - every path returned 404. The only
+  real hit in this profile is the Swiss federal security.txt served by the publishing office at
+  www.blv.admin.ch, which points at the National Cyber Security Centre coordinated vulnerability disclosure
+  programme. It is the FSVO's institutional domain, not the API host; the WellKnown and SecurityTxt pointers
+  in apis.yml rest on that document alone.
+hosts:
+  - host: naehrwertdaten.ch
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: api.webapp.prod.blv.foodcase-services.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: webapp.prod.blv.foodcase-services.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: www.blv.admin.ch
+    note: Publishing federal office (FSVO / BLV), named as Publisher on https://naehrwertdaten.ch/en/about/.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: well-known/swiss-food-composition-database-security.txt

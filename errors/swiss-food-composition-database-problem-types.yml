@@ -1,0 +1,35 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  DERIVED from the served OpenAPI 3.0.1 document, which documents ONLY 200 responses across all 21
+  operations - there is not a single 4xx or 5xx response object in the contract. PROBED live on 2026-08-27 to
+  record what the API actually returns on failure, since the contract says nothing.
+format: none
+problem_type_count: 0
+note: >-
+  The provider publishes no error catalogue and the contract documents no failure response. Probing shows a
+  bare HTTP status with an empty body - no code, no message, no problem+json, no request id. For an agent
+  this is the weakest part of the surface: a failed call is distinguishable only by status code, and a
+  not-found is indistinguishable from a wrong-identifier-space mistake (passing a public foodid where a DBID
+  is required) except by trying getFoodDbIdByFoodId first. Recorded as an honest zero.
+observed:
+  - status: 404
+    trigger: GET /webresources/BLV-api/food/999999999 (unknown DBID)
+    body: empty (content-length 0)
+    media_type: none
+    remediation: >-
+      Confirm the identifier space. Public food IDs must be translated with
+      GET /webresources/BLV-api/fooddbid/{foodId} before being used as a DBID.
+  - status: 404
+    trigger: GET /webresources/BLV-api/doesnotexist (unknown path)
+    body: empty (content-length 0)
+    media_type: none
+    remediation: Check the path against openapi/swiss-food-composition-database-openapi.json.
+  - status: 200
+    trigger: GET /webresources/BLV-api/components?lang=zz (invalid enum value for lang)
+    body: data returned
+    media_type: application/json
+    note: >-
+      An out-of-enum lang value is NOT rejected - the API answers 200. Input validation on the documented
+      enum is not enforced at the edge, so a typo in the language code fails silently rather than loudly.
+problem_types: []

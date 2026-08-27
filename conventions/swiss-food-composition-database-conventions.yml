@@ -1,0 +1,118 @@
+generated: '2026-08-27'
+method: derived
+source: >-
+  DERIVED from the served OpenAPI 3.0.1 document (openapi/swiss-food-composition-database-openapi.json) and
+  from live unauthenticated probes on 2026-08-27. SEARCHED the FSVO API description document published at
+  https://naehrwertdaten.ch/en/downloads/ for cross-cutting rules; it documents the base URL, the JSON
+  response format and the open-access posture, and nothing else.
+docs: https://naehrwertdaten.ch/en/downloads/
+base_url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+auth:
+  style: none
+  detail: See authentication/swiss-food-composition-database-authentication.yml. No key, no account, no OAuth.
+media_types:
+  request: none (no request bodies - every operation is a GET)
+  response: application/json
+localization:
+  parameter: lang
+  location: query
+  values: [de, en, fr, it]
+  default: en
+  applies_to: >-
+    17 of the 21 operations. getLangualCodes, getVersiondb, genericCount and getValue_1 (source) take no lang
+    parameter. This is the API's most distinctive convention - language is a per-request query parameter, not
+    an Accept-Language header, so an agent must pass it explicitly on every call.
+pagination:
+  style: offset-limit
+  parameters:
+    limit: getFoodsTurbo, getFoods, getCategorizedFoods
+    offset: getFoodsTurbo only (getCategorizedFoods documents its offset as "Unused")
+  response_fields: none
+  total_count: not returned
+  note: >-
+    No envelope, no total, no Link header, no cursor. Responses are bare JSON arrays. A client cannot tell
+    whether more results exist except by requesting more.
+filtering:
+  parameters:
+    - search - free-text over food names
+    - category - top-level category ID
+    - subcategory - array of subcategory IDs
+    - component - nutrient ID
+    - operator - one of <, >, = (comparison against amount)
+    - amount - threshold value for the chosen component
+    - type - boolean, restrict to generic foods
+  note: >-
+    The component/operator/amount triple is a genuine nutrient-threshold query ("foods with more than X of
+    nutrient Y") available anonymously - unusual capability for a free food-composition API.
+field_expansion:
+  supported: false
+  note: >-
+    Shape is fixed per operation. Nutrient breadth is instead selected via componentsetid on getValues
+    (Standard / All nutrients / Food labelling).
+metadata:
+  supported: false
+request_id_tracing:
+  supported: false
+  note: No request-id, correlation-id or trace header is returned. Debugging with the provider means quoting the URL.
+versioning:
+  api:
+    scheme: none
+    detail: >-
+      The API path carries no version segment (/BLV_WebApp_WS/webresources/BLV-api/...). The Swagger UI page
+      labels the document version 1.0.0 client-side; the served openapi.json carries no info block at all.
+  data:
+    scheme: major.minor, annual
+    current: V 7.1
+    endpoint: GET /webresources/BLV-api/versiondb
+    detail: >-
+      Data versioning is the versioning that actually exists here, and it is queryable at runtime -
+      /versiondb returned {"idversion":51,"versiontext":"V 7.1"} on 2026-08-27. An agent should read it and
+      cache against it. History at https://naehrwertdaten.ch/en/versions-and-updates/.
+  legacy_surface: >-
+    GET /webresources/BLV-api/foods_old (operationId getFoods) is a superseded search operation kept alongside
+    the current /foods. It is not marked deprecated in the spec and no removal date is published.
+error_envelope:
+  format: none
+  detail: >-
+    Probed 2026-08-27 - GET /webresources/BLV-api/food/999999999 and an unknown path both return HTTP 404 with
+    content-length 0 and no body. There is no error object, no code, no message and no problem+json. See
+    errors/swiss-food-composition-database-problem-types.yml.
+rate_limit_signaling:
+  headers: none
+  detail: See rate-limits/swiss-food-composition-database-rate-limits.yml. No limit published, none signalled.
+caching:
+  headers_observed: none
+  detail: >-
+    No Cache-Control, ETag or Last-Modified on the probed responses. Clients should cache against the
+    /versiondb value rather than against HTTP validators.
+cors:
+  enabled: true
+  allow_origin: '*'
+idempotency:
+  status: na
+  detail: >-
+    Read-only API. All 21 published operations are GET and there is no create, update or delete surface, so
+    there is nothing to make idempotent. An honest na, not a gap.
+dry_run_mode:
+  status: na
+  detail: No write surface, so there is no action to rehearse.
+reversibility:
+  status: na
+  grade: na
+  detail: >-
+    The Swiss Food Composition Database API has no write surface. Every one of the 21 published operations is
+    a GET that returns reference data; an agent cannot create, modify, delete or transact anything, so no
+    action it takes here needs to be taken back. Reversibility is therefore not applicable rather than absent.
+  write_surfaces: []
+  caveat: >-
+    One operation is state-changing despite being a GET: /webresources/BLV-api/reloadCache
+    ("Reloads the local database cache of the application"), tagged "system configuration" in the provider's
+    own spec and exposed unauthenticated. It has no reversal operation and the provider documents no window
+    or effect. It is excluded from the derived agent tool surface for that reason
+    (see mcp/swiss-food-composition-database-mcp.yml). No window is asserted here because the provider states none.
+cross_references:
+  errors: errors/swiss-food-composition-database-problem-types.yml
+  lifecycle: lifecycle/swiss-food-composition-database-lifecycle.yml
+  authentication: authentication/swiss-food-composition-database-authentication.yml
+  rate_limits: rate-limits/swiss-food-composition-database-rate-limits.yml
+  data_model: data-model/swiss-food-composition-database-data-model.yml

@@ -1,0 +1,27 @@
+
+The Swiss Food Composition Database API
+The Swiss Food Composition Database API offers the possibility to fetch data collection of the Federal Food Safety and Veterinary Office FSVO on the composition of foods that are available in Switzerland directly by an external application or system. This solution allows interested parties to build software on the base of the most recent versions of the Swiss Food Composition Database in a highly convenient way. API is free to use and allows unrestricted access.
+The Swiss Food Composition Database API address:
+https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api
+The Swiss Food Composition Database API documentation:
+https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
+The Swiss Food Composition Database API documentation in .json format:
+https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.json
+The Swiss Food Composition Database API documentation in .yaml format:
+https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/openapi.yaml
+
+Software architecture
+
+The root component of the whole system is the FoodCASE® application developed by Premotec GmbH, which stores raw data in its database. Next the preprocessed data is passed, in a process called synchronization, directly to The Swiss Food Composition Database Application which manages its separate database. This separation with tight synchronization incorporates better security and system stability. Additionally, all the data, associated information, and mechanisms are available through HTTP protocol through REST API. Moreover, there is separation between well documented API available for public usage which serves data formatted in the same manner as visible on the website and the API used by website, with unformatted data.
+The data is later simplified to be more user friendly and presented to the user through the website with an interactive search system or in the form of downloadable .xlsx files.
+Request data flow
+API serves data from The Swiss Food Composition Database Application in the form of the most popular JSON format, which makes it easier to implement into any application. All of the available endpoints and methods are nonrestricted, free to access, and precisely described in the documentation: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS.
+The process of obtaining the data could be depicted in the following steps:
+The user prepares the request by selecting the appropriate endpoint address, method, and required data, by embedding it into an application and then send the request to the API server.
+
+The user waits for the response, while the server prepares the data by fetching it from the database.
+
+API server sends a response with requested data in JSON format back to the user.
+
+
+The user got the data and could interpret the JSON and use it as desired. This process allows external users to request data and receive responses directly to its application without any human work needed.
