@@ -12,6 +12,17 @@ description: >-
   search, single-food retrieval, nutrient values and their sources, ingredients, LanguaL codes, the category tree,
   component/unit reference data and the current database version.
 url: https://raw.githubusercontent.com/api-evangelist/swiss-food-composition-database/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://naehrwertdaten.ch/wp-content/uploads/2018/04/favicon.png
 x-type: company
 x-source: harvest:health-device-stack
