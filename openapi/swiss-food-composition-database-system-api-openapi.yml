@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: Swiss Food Composition Database System API
+tags:
+- name: system
+paths:
+  /webresources/BLV-api/components:
+    get:
+      tags:
+      - system
+      summary: Get all used components
+      description: Returns a list of components used in system
+      operationId: getComponents
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which components should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        '200':
+          description: List of components
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentWithSets'
+  /webresources/BLV-api/sets:
+    get:
+      tags:
+      - system
+      summary: Get all used component sets
+      description: Returns a list of component sets used in system
+      operationId: getComponentSets
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which component sets would be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        '200':
+          description: List of component sets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentSet'
+  /webresources/BLV-api/units:
+    get:
+      tags:
+      - system
+      summary: Get all used units
+      description: Returns a list of unit used in system
+      operationId: getUnits
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which unit should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        '200':
+          description: List of units
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Unit'
+  /webresources/BLV-api/groups:
+    get:
+      tags:
+      - system
+      summary: Get all groups
+      description: Returns a list of groups used in system
+      operationId: getComponentGroups
+      parameters:
+      - name: lang
+        in: query
+        description: Language in which component groups should be returned
+        schema:
+          type: string
+          description: language
+          default: en
+          enum:
+          - de
+          - en
+          - fr
+          - it
+      responses:
+        '200':
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentGroup'
+  /webresources/BLV-api/versiondb:
+    get:
+      tags:
+      - system
+      summary: Get version of the database
+      description: Returns object indicating a version of the database
+      operationId: getVersiondb
+      responses:
+        '200':
+          description: List of units
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Versiondb'
+components:
+  schemas:
+    Unit:
+      required:
+      - code
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    ComponentSet:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    ComponentGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        parentComponentGroup:
+          type: integer
+          format: int32
+        componentgroupidcomponent:
+          type: integer
+          format: int32
+        sort:
+          type: integer
+          format: int32
+        getChildComponentGroup:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ComponentGroup'
+    ComponentWithSets:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sets:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentSet'
+    Versiondb:
+      required:
+      - idversion
+      - versiontext
+      type: object
+      properties:
+        idversion:
+          type: integer
+          format: int32
+        versiontext:
+          maxLength: 10
+          minLength: 1
+          type: string
