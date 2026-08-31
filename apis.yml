@@ -32,16 +32,16 @@ specificationVersion: '0.20'
 created: '2026-08-27'
 modified: '2026-08-27'
 tags:
-  - Food
-  - Nutrition
-  - Food Composition
+  - food
+  - nutrition
+  - food-composition
   - Health
   - Open Data
-  - Government
-  - Switzerland
-  - Reference Data
-  - Public Sector
-  - Research
+  - government
+  - switzerland
+  - reference-data
+  - public-sector
+  - research
 tags_raw:
   - food
   - nutrition
@@ -60,6 +60,8 @@ apis:
   humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   tags:
+  - Data
+  tags_raw:
   - data
   properties:
   - type: OpenAPI
@@ -89,6 +91,8 @@ apis:
   humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   tags:
+  - Stats
+  tags_raw:
   - stats
   properties:
   - type: OpenAPI
@@ -118,6 +122,8 @@ apis:
   humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   tags:
+  - System
+  tags_raw:
   - system
   properties:
   - type: OpenAPI
@@ -148,6 +154,8 @@ apis:
   humanURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   baseURL: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS
   tags:
+  - System Configuration
+  tags_raw:
   - system configuration
   properties:
   - type: OpenAPI
