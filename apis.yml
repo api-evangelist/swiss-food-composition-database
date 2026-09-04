@@ -23,6 +23,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: free
+  onboarding: open
+  trial: false
+  try_now: true
+  public: true
+  label: Free · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://naehrwertdaten.ch/wp-content/uploads/2018/04/favicon.png
 x-type: company
 x-source: harvest:health-device-stack
@@ -225,8 +240,9 @@ common:
     url: rate-limits/swiss-food-composition-database-rate-limits.yml
   - type: DataModel
     url: data-model/swiss-food-composition-database-data-model.yml
-  - type: MCPServer
+  - type: X-MCPServerCandidate
     url: mcp/swiss-food-composition-database-mcp.yml
+    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
   - type: AgentSkill
     url: skills/_index.yml
   - type: Security
