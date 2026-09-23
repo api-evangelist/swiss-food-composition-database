@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Swiss Food Composition Database System API
 tags:
-- name: system
+- name: System
 paths:
   /webresources/BLV-api/components:
     get:
       tags:
-      - system
+      - System
       summary: Get all used components
       description: Returns a list of components used in system
       operationId: getComponents
@@ -36,7 +36,7 @@ paths:
   /webresources/BLV-api/sets:
     get:
       tags:
-      - system
+      - System
       summary: Get all used component sets
       description: Returns a list of component sets used in system
       operationId: getComponentSets
@@ -65,7 +65,7 @@ paths:
   /webresources/BLV-api/units:
     get:
       tags:
-      - system
+      - System
       summary: Get all used units
       description: Returns a list of unit used in system
       operationId: getUnits
@@ -94,7 +94,7 @@ paths:
   /webresources/BLV-api/groups:
     get:
       tags:
-      - system
+      - System
       summary: Get all groups
       description: Returns a list of groups used in system
       operationId: getComponentGroups
@@ -123,7 +123,7 @@ paths:
   /webresources/BLV-api/versiondb:
     get:
       tags:
-      - system
+      - System
       summary: Get version of the database
       description: Returns object indicating a version of the database
       operationId: getVersiondb
@@ -136,6 +136,27 @@ paths:
                 $ref: '#/components/schemas/Versiondb'
 components:
   schemas:
+    ComponentSet:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    Versiondb:
+      required:
+      - idversion
+      - versiontext
+      type: object
+      properties:
+        idversion:
+          type: integer
+          format: int32
+        versiontext:
+          maxLength: 10
+          minLength: 1
+          type: string
     Unit:
       required:
       - code
@@ -150,14 +171,6 @@ components:
           maxLength: 2147483647
           minLength: 1
           type: string
-    ComponentSet:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
     ComponentGroup:
       type: object
       properties:
@@ -201,16 +214,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComponentSet'
-    Versiondb:
-      required:
-      - idversion
-      - versiontext
-      type: object
-      properties:
-        idversion:
-          type: integer
-          format: int32
-        versiontext:
-          maxLength: 10
-          minLength: 1
-          type: string

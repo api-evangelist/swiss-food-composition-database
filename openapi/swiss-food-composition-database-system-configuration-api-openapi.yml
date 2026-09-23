@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Swiss Food Composition Database system configuration API
 tags:
-- name: system configuration
+- name: System Configuration
 paths:
   /webresources/BLV-api/reloadCache:
     get:
       tags:
-      - system configuration
+      - System Configuration
       summary: Reload of the cache
       description: Reloads the local database cache of the application. Use in case of the faulty situations.
       operationId: reloadCache

@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Swiss Food Composition Database Stats API
 tags:
-- name: stats
+- name: Stats
 paths:
   /webresources/BLV-api/genericCount:
     get:
       tags:
-      - stats
+      - Stats
       summary: Get amount of generic foods
       description: Returns a number of generic foods in database
       operationId: genericCount

@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Swiss Food Composition Database Data API
 tags:
-- name: data
+- name: Data
 paths:
   /webresources/BLV-api/values:
     get:
       tags:
-      - data
+      - Data
       summary: Get all values from the given food
       description: Returns a list of values from given food
       operationId: getValues
@@ -50,7 +50,7 @@ paths:
   /webresources/BLV-api/langualcodes:
     get:
       tags:
-      - data
+      - Data
       summary: Get all langual codes associated with a particular food
       description: Returns a list of langual codes associated with a particular food
       operationId: getLangualCodes
@@ -74,7 +74,7 @@ paths:
   /webresources/BLV-api/topcategories:
     get:
       tags:
-      - data
+      - Data
       summary: Get top level categories
       description: Returns a list of top level categories used in system
       operationId: getCategories
@@ -103,7 +103,7 @@ paths:
   /webresources/BLV-api/categories:
     get:
       tags:
-      - data
+      - Data
       summary: Get all used categories
       description: Returns a list of categories used in system
       operationId: getAllCategories
@@ -132,7 +132,7 @@ paths:
   /webresources/BLV-api/subcategories/{id}:
     get:
       tags:
-      - data
+      - Data
       summary: Get all subcategories of particular top level category
       description: Returns a list of subcategories of particular top level category
       operationId: getSubCategories
@@ -168,7 +168,7 @@ paths:
   /webresources/BLV-api/foods_old:
     get:
       tags:
-      - data
+      - Data
       summary: Get all old foods matching search criteria
       description: Returns a list of old foods with synonyms and categories
       operationId: getFoods
@@ -244,7 +244,7 @@ paths:
   /webresources/BLV-api/fooddbid/{foodId}:
     get:
       tags:
-      - data
+      - Data
       summary: Get DBID of the food using foodId
       description: Returns a food DBID
       operationId: getFoodDbIdByFoodId
@@ -268,7 +268,7 @@ paths:
   /webresources/BLV-api/foods:
     get:
       tags:
-      - data
+      - Data
       summary: Get all foods matching search criteria
       description: Returns a list of foods
       operationId: getFoodsTurbo
@@ -355,7 +355,7 @@ paths:
   /webresources/BLV-api/food/{DBID}:
     get:
       tags:
-      - data
+      - Data
       summary: Get particular food
       description: Returns particular food indicated by DBID
       operationId: getFood
@@ -389,7 +389,7 @@ paths:
   /webresources/BLV-api/categorizedfoods:
     get:
       tags:
-      - data
+      - Data
       summary: Get all foods gathered by category and counted matching search criteria
       description: Returns a list categories matching search criteria with number of foods
       operationId: getCategorizedFoods
@@ -477,7 +477,7 @@ paths:
   /webresources/BLV-api/ingredients:
     get:
       tags:
-      - data
+      - Data
       summary: Get all ingredients of particular food
       description: Returns a list of ingredients of particular food
       operationId: getIngredients
@@ -514,7 +514,7 @@ paths:
   /webresources/BLV-api/value/{DBID}:
     get:
       tags:
-      - data
+      - Data
       summary: Get particular value indicated by DBID
       description: Returns a value
       operationId: getValue
@@ -548,7 +548,7 @@ paths:
   /webresources/BLV-api/source/{DBID}:
     get:
       tags:
-      - data
+      - Data
       summary: Get source value of particular food component
       description: Returns source value of particular food component
       operationId: getValue_1
@@ -569,142 +569,6 @@ paths:
                 $ref: '#/components/schemas/SourceValueDTO'
 components:
   schemas:
-    Name:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        term:
-          type: string
-    FoodWithNamesSynonymesCategories:
-      required:
-      - generic
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        generic:
-          type: boolean
-        names:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Name'
-        synonyms:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Synonym'
-        categories:
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            format: int32
-    Category:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-    Unit:
-      required:
-      - code
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          maxLength: 2147483647
-          minLength: 1
-          type: string
-    LangualDTO:
-      type: object
-      properties:
-        letter:
-          type: string
-        description:
-          type: string
-        classification:
-          type: string
-    CategoryWithNumberOfFoodDTO:
-      type: object
-      properties:
-        categoryId:
-          type: integer
-          format: int32
-        categoryName:
-          type: string
-        numberOfFoods:
-          type: integer
-    Value:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        value:
-          type: number
-        rawValue:
-          type: number
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reference'
-        component:
-          $ref: '#/components/schemas/Component'
-        unit:
-          $ref: '#/components/schemas/Unit'
-        minimum:
-          type: number
-        maximum:
-          type: number
-        n:
-          type: number
-        contrMethodTypes:
-          type: string
-        valueTypeCode:
-          type: string
-        contributingvalues:
-          type: string
-        contributingvaluetypes:
-          type: string
-        methodIndicatorCode:
-          type: string
-        containformula:
-          type: boolean
-        isborrowed:
-          type: boolean
-        isrescaled:
-          type: boolean
-        isfixed:
-          type: boolean
-        methodtypecode:
-          type: string
-    Ingredient:
-      required:
-      - isrecipe
-      type: object
-      properties:
-        foodid:
-          $ref: '#/components/schemas/FoodName'
-        amount:
-          type: number
-        percent:
-          type: number
-        unit:
-          type: string
-        isrecipe:
-          type: boolean
-        dummyprepmethods:
-          type: string
     Reference:
       required:
       - citation
@@ -729,26 +593,6 @@ components:
           maxLength: 2147483647
           minLength: 0
           type: string
-    Synonym:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        term:
-          type: string
-        type:
-          type: string
-    FoodName:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        issearchable:
-          type: boolean
     Component:
       type: object
       properties:
@@ -815,6 +659,32 @@ components:
           type: boolean
         contrMethodTypes:
           type: string
+    Ingredient:
+      required:
+      - isrecipe
+      type: object
+      properties:
+        foodid:
+          $ref: '#/components/schemas/FoodName'
+        amount:
+          type: number
+        percent:
+          type: number
+        unit:
+          type: string
+        isrecipe:
+          type: boolean
+        dummyprepmethods:
+          type: string
+    LangualDTO:
+      type: object
+      properties:
+        letter:
+          type: string
+        description:
+          type: string
+        classification:
+          type: string
     ValueFormatted:
       type: object
       properties:
@@ -842,6 +712,76 @@ components:
         sourceInfoLevel:
           type: integer
           format: int32
+    Synonym:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+        type:
+          type: string
+    Name:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    Value:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        value:
+          type: number
+        rawValue:
+          type: number
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        component:
+          $ref: '#/components/schemas/Component'
+        unit:
+          $ref: '#/components/schemas/Unit'
+        minimum:
+          type: number
+        maximum:
+          type: number
+        n:
+          type: number
+        contrMethodTypes:
+          type: string
+        valueTypeCode:
+          type: string
+        contributingvalues:
+          type: string
+        contributingvaluetypes:
+          type: string
+        methodIndicatorCode:
+          type: string
+        containformula:
+          type: boolean
+        isborrowed:
+          type: boolean
+        isrescaled:
+          type: boolean
+        isfixed:
+          type: boolean
+        methodtypecode:
+          type: string
     Food:
       required:
       - isgeneric
@@ -883,3 +823,63 @@ components:
         foodid:
           type: integer
           format: int32
+    Unit:
+      required:
+      - code
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    FoodName:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        issearchable:
+          type: boolean
+    FoodWithNamesSynonymesCategories:
+      required:
+      - generic
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        generic:
+          type: boolean
+        names:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Name'
+        synonyms:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Synonym'
+        categories:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    CategoryWithNumberOfFoodDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int32
+        categoryName:
+          type: string
+        numberOfFoods:
+          type: integer
