@@ -569,55 +569,6 @@ paths:
                 $ref: '#/components/schemas/SourceValueDTO'
 components:
   schemas:
-    Reference:
-      required:
-      - citation
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        citation:
-          maxLength: 2147483647
-          minLength: 1
-          type: string
-        title:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-        authors:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-        typeDescriptor:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-    Component:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          type: string
-        group:
-          type: integer
-          format: int32
-        unit:
-          type: integer
-          format: int32
-        sortorder:
-          type: integer
-          format: int32
-        componentsets:
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            format: int32
     SourceValueDTO:
       type: object
       properties:
@@ -659,68 +610,19 @@ components:
           type: boolean
         contrMethodTypes:
           type: string
-    Ingredient:
+    Unit:
       required:
-      - isrecipe
+      - code
       type: object
       properties:
-        foodid:
-          $ref: '#/components/schemas/FoodName'
-        amount:
-          type: number
-        percent:
-          type: number
-        unit:
+        name:
           type: string
-        isrecipe:
-          type: boolean
-        dummyprepmethods:
-          type: string
-    LangualDTO:
-      type: object
-      properties:
-        letter:
-          type: string
-        description:
-          type: string
-        classification:
-          type: string
-    ValueFormatted:
-      type: object
-      properties:
         id:
           type: integer
           format: int32
-        value:
-          type: string
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reference'
-        component:
-          $ref: '#/components/schemas/Component'
-        unit:
-          type: string
-        minimum:
-          type: string
-        maximum:
-          type: string
-        n:
-          type: number
-        derivationOfValue:
-          type: string
-        sourceInfoLevel:
-          type: integer
-          format: int32
-    Synonym:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        term:
-          type: string
-        type:
+        code:
+          maxLength: 2147483647
+          minLength: 1
           type: string
     Name:
       type: object
@@ -730,7 +632,7 @@ components:
           format: int32
         term:
           type: string
-    Category:
+    Component:
       type: object
       properties:
         name:
@@ -738,6 +640,57 @@ components:
         id:
           type: integer
           format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sortorder:
+          type: integer
+          format: int32
+        componentsets:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    Reference:
+      required:
+      - citation
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        citation:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+        title:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        authors:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        typeDescriptor:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+    CategoryWithNumberOfFoodDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int32
+        categoryName:
+          type: string
+        numberOfFoods:
+          type: integer
     Value:
       type: object
       properties:
@@ -782,6 +735,87 @@ components:
           type: boolean
         methodtypecode:
           type: string
+    Ingredient:
+      required:
+      - isrecipe
+      type: object
+      properties:
+        foodid:
+          $ref: '#/components/schemas/FoodName'
+        amount:
+          type: number
+        percent:
+          type: number
+        unit:
+          type: string
+        isrecipe:
+          type: boolean
+        dummyprepmethods:
+          type: string
+    FoodName:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        issearchable:
+          type: boolean
+    ValueFormatted:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        value:
+          type: string
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        component:
+          $ref: '#/components/schemas/Component'
+        unit:
+          type: string
+        minimum:
+          type: string
+        maximum:
+          type: string
+        n:
+          type: number
+        derivationOfValue:
+          type: string
+        sourceInfoLevel:
+          type: integer
+          format: int32
+    LangualDTO:
+      type: object
+      properties:
+        letter:
+          type: string
+        description:
+          type: string
+        classification:
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    Synonym:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+        type:
+          type: string
     Food:
       required:
       - isgeneric
@@ -823,30 +857,6 @@ components:
         foodid:
           type: integer
           format: int32
-    Unit:
-      required:
-      - code
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          maxLength: 2147483647
-          minLength: 1
-          type: string
-    FoodName:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        issearchable:
-          type: boolean
     FoodWithNamesSynonymesCategories:
       required:
       - generic
@@ -873,13 +883,3 @@ components:
           items:
             type: integer
             format: int32
-    CategoryWithNumberOfFoodDTO:
-      type: object
-      properties:
-        categoryId:
-          type: integer
-          format: int32
-        categoryName:
-          type: string
-        numberOfFoods:
-          type: integer
