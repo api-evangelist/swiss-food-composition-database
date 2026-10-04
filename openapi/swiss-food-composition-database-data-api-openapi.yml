@@ -569,6 +569,48 @@ paths:
                 $ref: '#/components/schemas/SourceValueDTO'
 components:
   schemas:
+    Reference:
+      required:
+      - citation
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        citation:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+        title:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        authors:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+        typeDescriptor:
+          maxLength: 2147483647
+          minLength: 0
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    Synonym:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        term:
+          type: string
+        type:
+          type: string
     Value:
       type: object
       properties:
@@ -613,7 +655,10 @@ components:
           type: boolean
         methodtypecode:
           type: string
-    Component:
+    Food:
+      required:
+      - isgeneric
+      - isrecipe
       type: object
       properties:
         name:
@@ -621,44 +666,43 @@ components:
         id:
           type: integer
           format: int32
-        code:
-          type: string
-        group:
-          type: integer
-          format: int32
-        unit:
-          type: integer
-          format: int32
-        sortorder:
-          type: integer
-          format: int32
-        componentsets:
+        ncf:
+          type: number
+        facf:
+          type: number
+        isgeneric:
+          type: boolean
+        isrecipe:
+          type: boolean
+        synonyms:
           uniqueItems: true
           type: array
           items:
-            type: integer
-            format: int32
-    Category:
+            $ref: '#/components/schemas/Synonym'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/Value'
+        matrixunitcode:
+          type: string
+        specificgravity:
+          type: number
+        yieldfactor:
+          type: number
+        foodid:
+          type: integer
+          format: int32
+    Name:
       type: object
       properties:
-        name:
-          type: string
         id:
           type: integer
           format: int32
-    Unit:
-      required:
-      - code
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          maxLength: 2147483647
-          minLength: 1
+        term:
           type: string
     SourceValueDTO:
       type: object
@@ -701,110 +745,6 @@ components:
           type: boolean
         contrMethodTypes:
           type: string
-    FoodWithNamesSynonymesCategories:
-      required:
-      - generic
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        generic:
-          type: boolean
-        names:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Name'
-        synonyms:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Synonym'
-        categories:
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            format: int32
-    Name:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        term:
-          type: string
-    Ingredient:
-      required:
-      - isrecipe
-      type: object
-      properties:
-        foodid:
-          $ref: '#/components/schemas/FoodName'
-        amount:
-          type: number
-        percent:
-          type: number
-        unit:
-          type: string
-        isrecipe:
-          type: boolean
-        dummyprepmethods:
-          type: string
-    Reference:
-      required:
-      - citation
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        citation:
-          maxLength: 2147483647
-          minLength: 1
-          type: string
-        title:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-        authors:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-        typeDescriptor:
-          maxLength: 2147483647
-          minLength: 0
-          type: string
-    CategoryWithNumberOfFoodDTO:
-      type: object
-      properties:
-        categoryId:
-          type: integer
-          format: int32
-        categoryName:
-          type: string
-        numberOfFoods:
-          type: integer
-    LangualDTO:
-      type: object
-      properties:
-        letter:
-          type: string
-        description:
-          type: string
-        classification:
-          type: string
-    Synonym:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        term:
-          type: string
-        type:
-          type: string
     ValueFormatted:
       type: object
       properties:
@@ -842,10 +782,26 @@ components:
           format: int32
         issearchable:
           type: boolean
-    Food:
+    Ingredient:
       required:
-      - isgeneric
       - isrecipe
+      type: object
+      properties:
+        foodid:
+          $ref: '#/components/schemas/FoodName'
+        amount:
+          type: number
+        percent:
+          type: number
+        unit:
+          type: string
+        isrecipe:
+          type: boolean
+        dummyprepmethods:
+          type: string
+    Unit:
+      required:
+      - code
       type: object
       properties:
         name:
@@ -853,33 +809,77 @@ components:
         id:
           type: integer
           format: int32
-        ncf:
-          type: number
-        facf:
-          type: number
-        isgeneric:
+        code:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    LangualDTO:
+      type: object
+      properties:
+        letter:
+          type: string
+        description:
+          type: string
+        classification:
+          type: string
+    Component:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sortorder:
+          type: integer
+          format: int32
+        componentsets:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    FoodWithNamesSynonymesCategories:
+      required:
+      - generic
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        generic:
           type: boolean
-        isrecipe:
-          type: boolean
+        names:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Name'
         synonyms:
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/Synonym'
         categories:
+          uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/Category'
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/Value'
-        matrixunitcode:
-          type: string
-        specificgravity:
-          type: number
-        yieldfactor:
-          type: number
-        foodid:
+            type: integer
+            format: int32
+    CategoryWithNumberOfFoodDTO:
+      type: object
+      properties:
+        categoryId:
           type: integer
           format: int32
+        categoryName:
+          type: string
+        numberOfFoods:
+          type: integer

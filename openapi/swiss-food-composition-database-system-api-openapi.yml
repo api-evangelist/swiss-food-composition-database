@@ -136,62 +136,6 @@ paths:
                 $ref: '#/components/schemas/Versiondb'
 components:
   schemas:
-    Unit:
-      required:
-      - code
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          maxLength: 2147483647
-          minLength: 1
-          type: string
-    ComponentWithSets:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-        code:
-          type: string
-        group:
-          type: integer
-          format: int32
-        unit:
-          type: integer
-          format: int32
-        sets:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ComponentSet'
-    ComponentSet:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: integer
-          format: int32
-    Versiondb:
-      required:
-      - idversion
-      - versiontext
-      type: object
-      properties:
-        idversion:
-          type: integer
-          format: int32
-        versiontext:
-          maxLength: 10
-          minLength: 1
-          type: string
     ComponentGroup:
       type: object
       properties:
@@ -214,3 +158,59 @@ components:
           writeOnly: true
           items:
             $ref: '#/components/schemas/ComponentGroup'
+    ComponentSet:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+    ComponentWithSets:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        group:
+          type: integer
+          format: int32
+        unit:
+          type: integer
+          format: int32
+        sets:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentSet'
+    Unit:
+      required:
+      - code
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int32
+        code:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    Versiondb:
+      required:
+      - idversion
+      - versiontext
+      type: object
+      properties:
+        idversion:
+          type: integer
+          format: int32
+        versiontext:
+          maxLength: 10
+          minLength: 1
+          type: string
