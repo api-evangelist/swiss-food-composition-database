@@ -33,3 +33,16 @@ plans:
       - Excel export of the complete database (Version 7.1).
       - Public search web application in German, French, Italian and English.
     source: https://naehrwertdaten.ch/en/informations/
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units: []
+  plans:
+  - name: Free (public federal open data)
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
