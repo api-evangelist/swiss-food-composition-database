@@ -64,5 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Swiss Food Composition Database is a company surfaced via the API Evangelist harvest backlog (source: health-device-stack) and added to the network as a stub for full-pipeline profiling.
-- https://naehrwertdaten.ch
+The Swiss Food Composition Database is the official reference dataset on the nutrient composition of foods available in Switzerland, published by the Federal Food Safety and Veterinary Office (FSVO / BLV). Version 7.1 (1 July 2026) covers 1,246 mostly generic foods across 19 main categories and 106 subcategories, with macronutrients, water, alcohol and energy for nearly every food, plus vitamins, minerals, fatty acid groups and individual fatty acids for most. The data is published free of charge in German, French, Italian and English, for commercial as well as scientific use, subject to acknowledgement of the source. Alongside the Excel export and the public search application, the FSVO operates a documented, entirely unauthenticated JSON REST API on the FoodCASE platform, described by a served OpenAPI 3.0.1 document with 21 read-only operations covering food search, single-food retrieval, nutrient values and their sources, ingredients, LanguaL codes, the category tree, component/unit reference data and the current database version.
+
+**Areas:** Food · Nutrition · food-composition · Health · Open Data · Government · Switzerland · Reference Data · Public Sector · Research
+
+## Swiss Food Composition Database on APIs.io
+
+Everything profiled for Swiss Food Composition Database is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/swiss-food-composition-database/](https://apis.io/providers/swiss-food-composition-database/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Swiss Food Composition Database Data API](https://apis.io/apis/swiss-food-composition-database/swiss-food-composition-database-data-api/) — The data API from Swiss Food Composition Database — 13 operation(s) for data.
+- [Swiss Food Composition Database Stats API](https://apis.io/apis/swiss-food-composition-database/swiss-food-composition-database-stats-api/) — The stats API from Swiss Food Composition Database — 1 operation(s) for stats.
+- [Swiss Food Composition Database System API](https://apis.io/apis/swiss-food-composition-database/swiss-food-composition-database-system-api/) — The system API from Swiss Food Composition Database — 5 operation(s) for system.
+- [Swiss Food Composition Database system configuration API](https://apis.io/apis/swiss-food-composition-database/swiss-food-composition-database-system-configuration-api/) — The system configuration API from Swiss Food Composition Database — 1 operation(s) for system configuration.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [swiss-food-composition-database-mcp.yml](https://apis.io/servers/swiss-food-composition-database/swiss-food-composition-database-mcp-yml/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Swiss Food Composition Database Openapi Overlay](https://apis.io/overlays/swiss-food-composition-database/swiss-food-composition-database-openapi-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Swiss Food Composition Database Authentication](https://apis.io/security/swiss-food-composition-database/swiss-food-composition-database-authentication/)
+- [Swiss Food Composition Database Domain Security](https://apis.io/security/swiss-food-composition-database/swiss-food-composition-database-domain-security/)
+- [Swiss Food Composition Database Vulnerability Disclosure](https://apis.io/security/swiss-food-composition-database/swiss-food-composition-database-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Swiss Food Composition Database Plans Pricing](https://apis.io/plans/swiss-food-composition-database/swiss-food-composition-database-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Swiss Food Composition Database Rate Limits](https://apis.io/rate-limits/swiss-food-composition-database/swiss-food-composition-database-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://naehrwertdaten.ch)
+- [Documentation](https://naehrwertdaten.ch/en/downloads/)
+- [API reference](https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS)
+- [Support](https://naehrwertdaten.ch/en/contact/)
+- [Changelog](https://naehrwertdaten.ch/en/versions-and-updates/)
+- [Terms of service](https://naehrwertdaten.ch/en/legal-information/)
+- [Privacy policy](https://naehrwertdaten.ch/en/legal-information/)
+
+## API Evangelist rating
+
+**Kin Score 37.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 37.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 35.1 |
+| Access clarity | 42.1 |
+
+**Agent readiness 21.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 30.4** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/swiss-food-composition-database/](https://apis.io/providers/swiss-food-composition-database/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Swiss Food Composition Database: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/swiss-food-composition-database/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
